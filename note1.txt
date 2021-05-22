@@ -1,0 +1,83 @@
+- create account on stripe developer site, from here will get test deatils - key and secret
+- in 2 process we can get the form 1. we can create the form with card holder name, card number, expiry date, cvv 2. we can get form by stripe js in this case stripe will verify the form
+
+
+
+Payment gateway using stripe
+
+Step 1: Install Laravel 8
+
+Step 2: Install Stripe Package In Laravel
+composer require stripe/stripe-php
+
+Step 3: Configuration of Stripe
+in .env file
+STRIPE_KEY=pk_test_xxxxxx
+STRIPE_SECRET=sk_test_xxxxxx
+
+config/services.php
+'stripe' => [
+     'secret' => env('STRIPE_SECRET'),
+],
+
+Step 4: Create Route
+
+Step 5: Add Controller
+
+Step 6: Create a Blade file for View
+
+Step 7: Run
+
+
+
+
+role-based system
+
+I did that in a CRM based project
+There were 5 types of staff,
+
+1. SA(Super Admin), 
+2. admin, 
+3. GA(Group Admin), - will be assign to any admin
+4. GM(Group Manager), - will be assign to any GA
+5. child staff - will be assign to any GM
+
+There will be only 1 SA
+
+There are permissions also present for each tab in the project like for leads, clients, projects, tasks, reminder, notes etc.
+For each tab there can be multiple permissions like - add, edit, remove, view(Own), view(Global) etc
+We can edit these permissions for each staff type.
+
+
+SA - can access everything
+
+admin - If permission View(Global) is on then they can access leads, clients, projects(related to lead/client), Taks etc which are assigned to them and GA, GM, child staff belong to them.
+        If permission View(Own) is on then they can access things which are assign to them only.
+
+GA - If permission View(Global) is on then they can access things which are belong to them and GM, child staff belong to them
+     If permission View(Own) is on then they can access things which are belong to them only.
+
+Like this it will work for other staff members also.
+
+
+
+
+Jasmine
+Jasmine is a great BDD open-source framework and test runner for testing all kinds of javascript applications. 
+It includes both the visibility test and the response test of the user interface on several devices with different resolutions. 
+A lot of developers who are Angular CLI users love to use Jasmine for testing the application. 
+Developers mostly combine it with Babel and Enzyme to test React application. 
+You can read about helper util library which is a designated to test the React application. 
+Below is some pro side of the jasmine framework…
+
+ - A document object model (DOM) is not required for Jasmine.
+ - Helpful in both the front and back end tests.
+ - Async function tests.
+ - Mocking requests.
+ - Custom equality checker assertion.
+ - Custom matcher assertion.
+ - Solid documents and community support.
+Keep in mind that Jasmine doesn’t support snapshot tests, code coverage tools, parallelization (requires third-party tools), and native DOM manipulation (requires a third-party tool).
+
+
+

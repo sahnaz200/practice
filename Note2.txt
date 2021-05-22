@@ -1,0 +1,164 @@
+localStorage and sessionStorage :
+The localStorage and sessionStorage properties allow to save key/value pairs in a web browser.
+
+Window sessionStorage Property - The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
+
+Syntax :
+window.sessionStorage
+
+Syntax for SAVING data to sessionStorage:
+sessionStorage.setItem("key", "value");
+
+Syntax for READING data from sessionStorage:
+var lastname = sessionStorage.getItem("key");
+
+Syntax for REMOVING saved data from sessionStorage:
+sessionStorage.removeItem("key");
+
+Syntax for REMOVING ALL saved data from sessionStorage:
+sessionStorage.clear();
+
+
+
+Window localStorage Property - The localStorage object stores data with no expiration date. The data will not be deleted when the browser is closed, 
+and will be available the next day, week, or year.
+The localStorage property is read-only.
+
+Syntax
+window.localStorage
+
+Syntax for SAVING data to localStorage:
+localStorage.setItem("key", "value");
+
+Syntax for READING data from localStorage:
+var lastname = localStorage.getItem("key");
+
+Syntax for REMOVING data from localStorage:
+localStorage.removeItem("key");
+
+Syntax for REMOVING ALL saved data from localStorage:
+localStorage.clear();
+
+
+
+
+
+
+
+
+parseInt(string, radix) - The parseInt() function parses a string and returns an integer.
+The radix parameter is used to specify which numeral system to be used, for example, a radix of 16 (hexadecimal) indicates that the number 
+in the string should be parsed from a hexadecimal number to a decimal number.
+
+
+
+
+
+
+call() and apply() - an object can use a method belonging to another object.
+The difference is:
+The call() method takes arguments separately.
+The apply() method takes arguments as an array.
+
+var person = {
+  fullName: function() {
+    return this.firstName + " " + this.lastName;
+  }
+}
+var person1 = {
+  firstName:"John",
+  lastName: "Doe"
+}
+person.fullName.call(person1);  // Will return "John Doe"
+person.fullName.apply(person1);  // Will return "John Doe"
+
+
+var person = {
+  fullName: function(city, country) {
+    return this.firstName + " " + this.lastName + "," + city + "," + country;
+  }
+}
+var person1 = {
+  firstName:"John",
+  lastName: "Doe"
+}
+person.fullName.call(person1, "Oslo", "Norway");//John Doe,Oslo,Norway
+person.fullName.apply(person1, ["Oslo", "Norway"]); //John Doe,Oslo,Norway
+
+
+
+
+
+
+
+
+
+
+The purpose of "use strict" is to indicate that the code should be executed in "strict mode". Strict mode is declared by adding "use strict"; to the beginning of a script or a function.
+Declared at the beginning of a script, it has global scope (all code in the script will execute in strict mode):
+a)	"use strict";
+x = 3.14;  // This will cause an error because x is not declared
+
+Declared inside a function, it has local scope (only the code inside the function is in strict mode):
+
+b)	x = 3.14;       // This will not cause an error.
+myFunction();
+function myFunction() {
+  "use strict";
+  y = 3.14;   // This will cause an error
+}
+
+
+Not allowed in strict mode :
+
+- Using an object, without declaring it, is not allowed:
+
+"use strict";
+x = {p1:10, p2:20};      // This will cause an error
+
+
+- Deleting a variable (or object) is not allowed.
+
+"use strict";
+var x = 3.14;
+delete x;                // This will cause an error
+
+
+- Deleting a function is not allowed.
+
+"use strict";
+function x(p1, p2) {};
+delete x;                // This will cause an error 
+
+
+- Duplicating a parameter name is not allowed:
+
+"use strict";
+function x(p1, p1) {};   // This will cause an error
+
+
+- Writing to a read-only property is not allowed:
+
+"use strict";
+var obj = {};
+Object.defineProperty(obj, "x", {value:0, writable:false});
+obj.x = 3.14;            // This will cause an error
+
+
+- Writing to a get-only property is not allowed:
+
+"use strict";
+var obj = {get x() {return 0} };
+obj.x = 3.14;            // This will cause an error
+
+
+- The word eval cannot be used as a variable:
+
+"use strict";
+var eval = 3.14;         // This will cause an error
+
+
+- The word arguments cannot be used as a variable:
+
+"use strict";
+var arguments = 3.14;    // This will cause an error

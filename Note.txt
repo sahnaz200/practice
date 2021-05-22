@@ -1,0 +1,665 @@
+anonyms function - function with no name
+
+setTimeOut(function(){
+    console.log("Hello")
+}, 2000)
+
+
+JavaScript is a single-threaded programming language 
+- Single threaded means it has only one call stack. Whatever is on the top of the call stack is run first.
+
+
+
+
+
+
+
+Callback function - a function passed to another function as parameter is call callback function
+
+
+
+
+
+Synchronous callback functions
+
+let numbers = [1, 2, 4, 7, 3, 5, 6];
+numbers.sort((a, b) => a - b);
+console.log(numbers); // [ 1, 2, 3, 4, 5, 6, 7 ]
+
+
+
+
+Asynchronous callback functions
+
+function download(url) {
+    setTimeout(() => {
+        // script to download the picture here
+        console.log(`Downloading ${url} ...`);
+    }, 3* 1000);
+}
+
+function process(picture) {
+    console.log(`Processing ${picture}`);
+}
+
+let url = 'https://www.javascripttutorial.net/foo.jg';
+
+download(url);
+process(url);
+
+
+OUTPUT
+
+Processing https://javascripttutorial.net/foo.jg
+Downloading https://javascripttutorial.net/foo.jg ...
+
+
+
+
+
+The correct sequence should be:
+
+Download the picture, wait for it to complete.
+Process the picture.
+
+
+function download(url, callback) {
+    setTimeout(() => {
+        // script to download the picture here
+        console.log(`Downloading ${url} ...`);
+        
+        // process the picture once it is completed
+        callback(url);
+    }, 3000);
+}
+
+function process(picture) {
+    console.log(`Processing ${picture}`);
+}
+
+let url = 'https://wwww.javascripttutorial.net/pic.jpg';
+download(url, process);
+
+
+Output:
+
+Downloading https://www.javascripttutorial.net/pic.jpg ...
+Processing https://www.javascripttutorial.net/pic.jpg
+
+
+
+
+
+
+
+
+What is callback hell?
+Deeply Nesting Callbacks. Here, each and every callback takes an argument that is a 
+result of the previous callbacks. In this manner, The code structure looks like a pyramid, making it difficult to read and maintain. 
+Also, if there is an error in one function, then all other functions get affected.
+
+Techniques to fix callback hell
+
+Using Async.js
+Using Promises
+Using Async-Await
+Coroutine (Promise + Generator)
+
+
+
+
+
+
+Promise - A JavaScript Promise object contains both the producing code and calls to the consuming code
+Producing Code" can take some time and "Consuming Code" must wait for the result.
+
+why to use promise ?
+- Promise is a simpler way to deal with Asynchronous code compared to callback
+- Callback hell can be avoided using promise
+
+
+A JavaScript Promise object can be:
+
+Pending
+Fulfilled
+Rejected
+
+
+The Promise object supports two properties: state and result.
+
+Pending - While a Promise object is "pending" (working), the result is undefined.
+
+Fulfilled - When a Promise object is "fulfilled", the result is a value.
+
+Rejected - When a Promise object is "rejected", the result is an error object.
+
+
+let myPromise = new Promise(function(myResolve, myReject) {
+    // "Producing Code"
+    let a= 2
+    if(a === 2){
+        myResolve('Success'); // when successful
+    } else{
+        myReject('Error');  // when error
+    }
+  
+});
+
+// "Consuming Code"
+myPromise.then((message)=>{
+    console.log(message)
+}).catch((message) => {
+    console.log(message)
+})
+
+
+
+
+
+
+
+
+
+Async/await
+Async - It can be placed before a function. The word “async” before a function means: a function always returns a promise. 
+
+this function returns a resolved promise with the result of 1:
+async function f() {
+  return 1;
+}
+
+f().then(alert); // 1
+
+
+We could explicitly return a promise, which would be the same:
+
+async function f() {
+  return Promise.resolve(1);
+}
+
+f().then(alert); // 1
+
+
+ 
+await - await only work inside async functions.The keyword await makes JavaScript wait until that promise settles and returns its result.
+
+Here’s an example with a promise that resolves in 1 second:
+async function f() {
+
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("done!"), 1000)
+  });
+
+  let result = await promise; // wait until the promise resolves (*)
+
+  alert(result); // "done!"
+}
+
+f();
+
+The function execution “pauses” at the line (*) and resumes when the promise settles, with result becoming its result. 
+So the code above shows “done!” in one second.
+
+
+
+
+
+
+closure - a closure gives you access to an outer function’s scope from an inner function. 
+          closures are created every time a function is created, at function creation time.
+- when you have a function inside a function then that inner function will have access to variables of the outerfunction even if outerfunction finishes it's execution.
+
+function outerFunction(outer){
+    return function innserFunction(inner){
+        console.log(outer + " " + inner)
+    }
+}
+
+const newFunction = outerFunction("Outer")
+newFunction("Inner") // Outer Inner
+
+
+
+DOM(Documnet Object Model)
+The DOM is an abstraction of a page’s HTML structure. It takes HTML elements and wraps them in an object with a tree-structure — maintaining the parent/child relationships of those nested HTML elements. 
+This provides an API that allows us to traverse nodes (HTML elements) and manipulate them in a number of ways — such as adding nodes, removing nodes, editing a node’s content, etc.
+
+
+Virtual DOM
+The Virtual DOM is a light-weight abstraction of the DOM. You can think of it as a copy of the DOM, that can be updated without affecting the actual DOM. 
+It has all the same properties as the real DOM object, but doesn’t have the ability to write to the screen like the real DOM. 
+The virtual DOM gains it’s speed and efficiency from the fact that it’s lightweight. 
+In fact, a new virtual DOM is created after every re-render.
+
+
+
+Shallow Copy: 
+When a reference variable is copied into a new reference variable using the assignment operator, a shallow copy of the referenced object is created.
+In simple words, a reference variable mainly stores the address of the object it refers to. This means both the old and new reference variable 
+point to the same object in memory. As a result if the state of the object changes through any of the reference variables it is reflected for both. 
+
+var employee = {
+    eid: "E102",
+    ename: "Jack",
+    eaddress: "New York",
+    salary: 50000
+}
+var newEmployee = employee; 
+newEmployee.ename = "Beck";
+
+console.log("Employee=> ", employee); //ename: "Beck"
+console.log("New Employee=> ", newEmployee); //ename: "Beck"
+
+
+
+
+Deep Copy: 
+deep copy makes a copy of all the members of the old object, allocates separate memory location for the new object and then assigns the copied 
+members to the new object. In this way, both the objects are independent of each other and in case of any modification to either one the other 
+is not affected. To create a deep copy of an object in JavaScript we use JSON.parse() and JSON.stringify() methods.
+
+var employee = {
+    eid: "E102",
+    ename: "Jack",
+    eaddress: "New York",
+    salary: 50000
+}
+var newEmployee = JSON.parse(JSON.stringify(employee)); 
+newEmployee.ename = "Beck";
+
+console.log("Employee=> ", employee); //ename: "Jack"
+console.log("New Employee=> ", newEmployee); //ename: "Beck"
+
+
+
+
+string.charAt(index) - The charAt() method returns the character at the specified index in a string.
+
+
+
+
+Slice (The original array will not be changed.)
+The slice() method returns the selected elements in an array, as a new array.
+The slice() method selects the elements starting at the given start argument and ends at but does not include the given end argument.
+
+array.slice(start, end)
+
+start - Optional. An integer that specifies where to start the selection (The first element has an index of 0). 
+        Use negative numbers to select from the end of an array. If omitted, it acts like "0"
+end	- Optional. An integer that specifies where to end the selection. 
+      If omitted, all elements from the start position and to the end of the array will be selected. 
+      Use negative numbers to select from the end of an array
+
+
+
+
+
+
+Splice (This method changes the original array)
+The splice() method adds/removes items to/from an array, and returns the removed item(s).
+
+array.splice(index, howmany, item1, ....., itemX)
+
+index - Required. An integer that specifies at what position to add/remove items, Use negative values to specify the position from the end of the array
+howmany	- Optional. The number of items to be removed. If set to 0, no items will be removed
+item1, ..., itemX - Optional. The new item(s) to be added to the array
+
+
+
+
+
+split(separator, limit) - used to split a string into an array of substrings, and returns the new array.
+separator - optional, Specifies the character used for splitting the string. If omitted, the entire string will be returned (an array with only one item)
+limit - optional, An integer that specifies the number of splits
+
+console.log("one-two".split("-"))
+// Result: ["one", "two"]
+
+
+
+
+
+join(separator) - Joins the elements of an array in a character string and retuen that string
+separator - The elements will be separated by a specified separator. The default separator is comma (,).
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+var energy = fruits.join(); //Banana,Orange,Apple,Mango
+
+
+
+
+String literal  - This literally gives you the value of the key "a"
+obj.a Or obj["a"]
+
+
+object literal - this gives you the value of the key stored in the variable a
+obj[a]
+
+
+object keys - get the keys of an object in an array with Object.keys(), or the values ​​with Object.values()
+console.log(Object.keys({ a: 1, b: 2 }))
+// Result: ["a", "b"]
+
+
+
+
+
+filter(function(currentValue, index, arr), thisValue) - creates an array filled with all array elements that pass a test (provided as a function).
+currentValue	- Required, others are optional
+Note: does not change the original array
+Returns: array
+console.log([1, 2, 3].filter(n => n > 1))
+// Result : [2, 3]
+
+
+
+
+
+
+reduce(function(total, currentValue, currentIndex, arr), initialValue) - The reduce() method reduces the array to a single value.
+The reduce() method executes a provided function for each value of the array (from left-to-right).
+The return value of the function is stored in an accumulator (result/total).
+
+total	- Required. The initialValue, or the previously returned value of the function
+currentValue	- Required. The value of the current element
+currentIndex	- Optional. The array index of the current element
+arr	- Optional. The array object the current element belongs to
+initialValue	- Optional. A value to be passed to the function as the initial value
+
+Note: This method does not change the original array.
+Retuen : Returns the accumulated result from the last call of the callback function
+
+console.log([175, 50, 25].reduce((total, num) => total - num))
+// Result : 100
+
+
+
+
+
+sort(compareFunction) -
+- The sort() method sorts the items of an array.
+By default, the sort() method sorts the values as strings in alphabetical and ascending order.
+compareFunction - optional, like function(a, b){return a-b}
+Note: This method changes the original array.
+Returns : sorted array
+
+
+
+
+shift() - removes the first item of an array and return the removed item. It will cahnge the original array.
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.shift(); 
+console.log(fruits) //["Orange", "Apple", "Mango"]
+
+pop() - The pop() method removes the last element of an array, and returns that element. It will cahnge the original array.
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.pop();
+
+
+unshift() - The unshift() method adds new items to the beginning of an array, and returns the new length. It will cahnge the original array.
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.unshift("Lemon","Pineapple");
+console.log(fruits) //["Lemon","Pineapple", "Banana", "Orange", "Apple", "Mango"]
+
+
+push() - The push() method adds new items to the end of an array, and returns the new length. It will cahnge the original array.
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.push("Kiwi");
+
+
+
+
+string.concat(string1, string2, ..., stringX)
+The concat() method is used to join two or more strings.
+This method does not change the existing strings, but returns a new string containing the text of the joined strings.
+var str1 = "Hello ";
+var str2 = "world!";
+var res = str1.concat(str2); // Hello world!
+
+
+
+
+
+
+array.map(function(currentValue, index, arr), thisValue)
+currentValue - required, others are optional
+
+The map() method creates a new array with the results of calling a function for every array element.
+The map() method calls the provided function once for each element in an array, in order.
+
+var numbers = [65, 44, 12, 4];
+var newarray = numbers.map(myFunction)
+
+function myFunction(num) {
+  return num * 10;
+}
+Note: The original array will not be changed.
+Returns: array
+
+
+
+
+
+array.forEach(function(currentValue, index, arr), thisValue)
+currentValue - The item value, Required
+index - The item index, optional
+arr - The array itself, optional
+thisValue - Optional. A value to be passed to the function to be used as its "this" value.
+If this parameter is empty, the value "undefined" will be passed as its "this" value
+
+The forEach() method calls a function (a callback function) once for each array element.
+
+var fruits = ["apple", "orange", "cherry"];
+fruits.forEach(myFunction);
+
+function myFunction(item, index) {
+  document.getElementById("demo").innerHTML += index + ":" + item + "<br>";
+}
+
+Return Value:	undefined
+
+
+
+
+
+JavaScript supports different kinds of loops:
+
+for - loops through a block of code a number of times
+for/in - loops through the properties of an object (object, Do not use it for array)
+for/of - loops through the values of an iterable object(Arrays, Strings, Maps, NodeLists)
+while - loops through a block of code while a specified condition is true
+do/while - also loops through a block of code while a specified condition is true
+
+
+var person = {fname:"John", lname:"Doe", age:25};
+var text = "";
+var x;
+for (x in person) {
+  text += person[x];
+}
+
+
+let cars = ["BMW", "Volvo", "Mini"];
+let text = "";
+for (let x of cars) {
+  text += x + "<br>";
+}
+
+
+
+
+In JavaScript, a variable without a value, has the value undefined. The type is also undefined.
+var car;    // Value is undefined, type is undefined
+car = undefined;    // Value is undefined, type is undefined
+
+
+In JavaScript null is "nothing". It is supposed to be something that doesn't exist.
+Unfortunately, in JavaScript, the data type of null is an object.
+You can consider it a bug in JavaScript that typeof null is an object. It should be null.
+
+
+undefined and null are equal in value but different in type:
+typeof undefined           // undefined
+typeof null                // object
+
+null === undefined         // false
+null == undefined          // true
+
+
+
+
+Primitive Data
+A primitive data value is a single simple data value with no additional properties and methods.
+
+string - a string is a sequence of zero or more characters. A literal string begins and ends with either a single quote(‘) or double quote (“).
+number - integer and floating-point numbers
+boolean - value is true/false and type is boolean
+undefined - By default, when a variable is declared but not initialized, it's value and type will be undefined.
+null - null is an empty object pointer. type is object.
+symbol - added in ES6. Symbol is a function. The Symbol function creates a new unique value every time you call it.
+
+
+
+
+
+
+NaN
+JavaScript has a special numeric value called NaN, which stands for Not a Number. In fact, it means an invalid number.
+
+For example, the division of a string by a number returns NaN as in the following example.
+
+console.log('a'/2); // NaN;
+
+The NaN has two special characteristics:
+
+Any operation with NaN returns NaN.
+The NaN does not equal any value, including itself.
+
+Here are some examples:
+
+console.log(NaN/2); // NaN
+console.log(NaN == NaN); // false
+
+
+
+
+
+
+Complex Data
+
+function
+object - an object is a collection of properties, where each property is defined as a key-value pair.
+        You can access the properties of an object by using two notations: the dot notation (.) and array-like notation ( []).
+array - represents a group of similar values
+
+The typeof operator returns "object" for objects, arrays, and null.
+
+typeof {name:'John', age:34} // Returns "object"
+typeof [1,2,3,4]             // Returns "object" (The typeof operator returns "object" for arrays because in JavaScript arrays are objects.)
+typeof null                  // Returns "object"
+typeof function myFunc(){}   // Returns "function"
+
+
+
+
+
+HTTP Methods
+
+GET - GET is used to request data from a specified resource. query string (name/value pairs) is sent in the URL of a GET request.
+
+POST - POST is used to send data to a server to create/update a resource.The data sent to the server with POST is stored in the request body of the HTTP request.
+
+PUT - PUT is used to send data to a server to create/update a resource.
+The difference between POST and PUT is that PUT requests are idempotent. 
+That is, calling the same PUT request multiple times will always produce the same result. 
+In contrast, calling a POST request repeatedly have side effects of creating the same resource multiple times.
+
+
+HEAD - HEAD is almost identical to GET, but without the response body.
+In other words, if GET /users returns a list of users, then HEAD /users will make the same request but will not return the list of users.
+HEAD requests are useful for checking what a GET request will return before actually making a GET request - like before downloading a large file or response body.
+
+
+DELETE - The DELETE method deletes the specified resource.
+
+PATCH: Submits a partial modification to a resource. If you only need to update one field for the resource, you may want to use the PATCH method.
+
+OPTIONS - The OPTIONS method describes the communication options for the target resource.
+
+
+
+
+
+
+
+Generator function : 
+A generator function is the same as a normal function, but whenever it needs to generate a value it uses the 'yield' keyword rather than 'return'. 
+The 'yield' keyword halts the function execution and sends a value back to the caller. 
+It has an ability that it can resume the functionality from where it is left off. 
+
+function * number() {
+  var num = 10;
+  while (true) {
+      yield num--;
+  }
+}
+var gen = number();
+console.log(gen.next().value); // 10
+console.log(gen.next().value); // 9
+console.log(gen.next().value); // 8
+
+
+
+
+
+
+
+
+ES6 feature
+
+The let keyword
+The const keyword
+JavaScript Arrow Functions
+JavaScript For/of
+JavaScript Classes
+JavaScript Promises
+JavaScript Symbol
+Default Parameters
+Function Rest Parameter
+Array.find() - returns the value of the first element in an array that pass a test (provided as a function).
+Array.findIndex() - returns the index of the first element in an array that pass a test (provided as a function).
+
+
+
+
+react testing Tools
+
+Jest
+Mocha
+Chai
+Karma
+Jasmine
+Enzyme
+
+
+
+
+
+To check 2 object quality with deep comparison - _.isEqual() is used
+
+_.isEqual(a, b) // Here a and b are 2 object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
